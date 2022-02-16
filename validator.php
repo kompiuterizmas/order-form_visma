@@ -2,10 +2,25 @@
 // connecting to SQL
 require 'dbh.php';
 // check if form DATA has been sent
-if (isset($_POST['order-submit']) || isset($_POST['order-update'])) {
+if (isset($_POST['order-submit']) || isset($_POST['order-update']) || isset($_POST['order-delete'])) {
     // setting variables from input
     if (isset($_POST['id'])) {
         $id = ($_POST['id']);
+    }
+    if(isset($_POST['order-delete'])){
+        $sql = "DELETE FROM orders WHERE id=?";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            header("Location: index.php?error=sqlerror" . $returnData);
+            exit();
+        }
+        else {
+            mysqli_stmt_bind_param($stmt, "s", $id);
+            mysqli_stmt_execute($stmt);
+            $message = 'Order successfully deleted from database';
+            header("Location: index.php?order=success&message=" . $message);
+            exit();
+        }
     }
     $name = $_POST['name'];
     $email = $_POST['email'];

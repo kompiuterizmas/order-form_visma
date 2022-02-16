@@ -76,6 +76,7 @@ if (!mysqli_stmt_prepare($stmt, $sql)) {
 
         echo '</select>
     <button type="submit" name="order-update">Update order</button>
+    <button type="submit" name="order-delete">Delete order</button>
     </form></div>';
     }
 }
